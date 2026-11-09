@@ -1,22 +1,29 @@
+
+package com.example.myapplication;
+
 import android.os.Bundle;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
     EditText editTextLiczbaKostek;
-    Button buttonLosuj;
-    Button buttonRosnaco;
-    Button buttonMalejaco;
-    GridLayout gridKostki;
+    Button buttonLosuj, buttonRosnaco, buttonMalejaco;
     TextView textViewWyniki;
+    LinearLayout linearLayoutKostki;
+
     ArrayList<Integer> wyniki = new ArrayList<>();
     Random random = new Random();
 
@@ -24,20 +31,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editTextLiczbaKostek = findViewById(R.id.editTextLiczbaKostek);
-        buttonLosuj = findViewById(R.id.buttonLosuj);
-        buttonRosnaco = findViewById(R.id.buttonRosnaco);
-        buttonMalejaco = findViewById(R.id.buttonMalejaco);
-        gridKostki = findViewById(R.id.gridKostki);
-        textViewWyniki = findViewById(R.id.textViewWyniki);
-        buttonLosuj.setOnClickListener(v -> losujKostki());
+
+
+        editTextLiczbaKostek =
+                findViewById(R.id.editTextLiczbaKostek);
+
+        buttonLosuj =
+                findViewById(R.id.buttonLosuj);
+
+        buttonRosnaco =
+                findViewById(R.id.buttonRosnaco);
+
+        buttonMalejaco =
+                findViewById(R.id.buttonMalejaco);
+
+        textViewWyniki =
+                findViewById(R.id.textViewWyniki);
+
+        linearLayoutKostki =
+                findViewById(R.id.linearLayoutKostki);
+
+
+        buttonLosuj.setOnClickListener(v -> losuj());
+
         buttonRosnaco.setOnClickListener(v -> sortujRosnaco());
+
         buttonMalejaco.setOnClickListener(v -> sortujMalejaco());
     }
-    private void losujKostki() {
-        String tekst = editTextLiczbaKostek.getText().toString().trim();
+
+
+    private void losuj() {
+
+        String tekst = editTextLiczbaKostek.getText()
+                .toString().trim();
+
         if (tekst.isEmpty()) {
-            Toast.makeText(this, "Podaj liczbę kostek!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Wpisz liczbe kostek!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -46,93 +77,167 @@ public class MainActivity extends AppCompatActivity {
         try {
             liczba = Integer.parseInt(tekst);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Podaj prawidłową liczbę całkowitą!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Nieprawidlowe dane!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (liczba <= 0 || liczba > 100) {
-            Toast.makeText(this, "Liczba kostek musi być od 1 do 100!", Toast.LENGTH_SHORT).show();
+        if (liczba < 1 || liczba > 100) {
+            Toast.makeText(this,
+                    "Podaj liczbe od 1 do 100!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
         wyniki.clear();
 
         for (int i = 0; i < liczba; i++) {
-            int wynik = random.nextInt(6) + 1;
-            wyniki.add(wynik);
+            wyniki.add(random.nextInt(6) + 1);
         }
-        odswiezWidok();
+
+        wyswietlWyniki();
     }
+
 
     private void sortujRosnaco() {
 
         if (wyniki.isEmpty()) {
-            Toast.makeText(this, "Najpierw wylosuj kostki!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Najpierw wylosuj kostki!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
-        int n = wyniki.size();
+        for (int i = 0; i < wyniki.size() - 1; i++) {
 
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
+            for (int j = 0; j < wyniki.size() - i - 1; j++) {
+
                 if (wyniki.get(j) > wyniki.get(j + 1)) {
+
                     int temp = wyniki.get(j);
+
                     wyniki.set(j, wyniki.get(j + 1));
+
                     wyniki.set(j + 1, temp);
                 }
             }
         }
 
-        odswiezWidok();
+        wyswietlWyniki();
     }
+
 
     private void sortujMalejaco() {
+
         if (wyniki.isEmpty()) {
-            Toast.makeText(this, "Najpierw wylosuj kostki!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Najpierw wylosuj kostki!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
-        int n = wyniki.size();
+        for (int i = 0; i < wyniki.size() - 1; i++) {
 
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
+            for (int j = 0; j < wyniki.size() - i - 1; j++) {
+
                 if (wyniki.get(j) < wyniki.get(j + 1)) {
+
                     int temp = wyniki.get(j);
+
                     wyniki.set(j, wyniki.get(j + 1));
+
                     wyniki.set(j + 1, temp);
                 }
             }
         }
 
-        odswiezWidok();
+        wyswietlWyniki();
     }
 
-    private void odswiezWidok() {
-        StringBuilder tekstWynikow = new StringBuilder();
+
+    private void wyswietlWyniki() {
+
+        StringBuilder tekst = new StringBuilder("Wyniki: ");
+
         for (int i = 0; i < wyniki.size(); i++) {
-            tekstWynikow.append(wyniki.get(i));
+
+            tekst.append(wyniki.get(i));
+
             if (i < wyniki.size() - 1) {
-                tekstWynikow.append(", ");
+                tekst.append(", ");
             }
         }
 
-        textViewWyniki.setText(tekstWynikow.toString());
-        gridKostki.removeAllViews();
-        gridKostki.setColumnCount(5);
+        textViewWyniki.setText(tekst.toString());
 
-        for (int wynik : wyniki) {
+
+        linearLayoutKostki.removeAllViews();
+
+
+        LinearLayout wiersz = null;
+
+        for (int i = 0; i < wyniki.size(); i++) {
+
+
+
+            if (i % 5 == 0) {
+
+                wiersz = new LinearLayout(this);
+
+                wiersz.setOrientation(
+                        LinearLayout.HORIZONTAL);
+
+                wiersz.setGravity(Gravity.CENTER);
+
+                linearLayoutKostki.addView(wiersz);
+            }
+
+
             TextView kostka = new TextView(this);
-            kostka.setText(String.valueOf(wynik));
+
+            kostka.setText(String.valueOf(wyniki.get(i)));
+
             kostka.setTextSize(24);
+
             kostka.setTextColor(Color.BLACK);
+
+            kostka.setTypeface(null, Typeface.BOLD);
+
             kostka.setGravity(Gravity.CENTER);
-            kostka.setBackgroundColor(Color.LTGRAY);
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            params.width = 110;
-            params.height = 110;
-            params.setMargins(5, 5, 5, 5);
-            kostka.setLayoutParams(params);
-            gridKostki.addView(kostka);
+
+
+            GradientDrawable tlo = new GradientDrawable();
+
+            tlo.setColor(Color.WHITE);
+
+            tlo.setCornerRadius(dp(10));
+
+            tlo.setStroke(dp(2), Color.BLACK);
+
+            kostka.setBackground(tlo);
+
+
+            LinearLayout.LayoutParams parametry =
+                    new LinearLayout.LayoutParams(
+                            dp(50),
+                            dp(50));
+
+            parametry.setMargins(
+                    dp(5), dp(5), dp(5), dp(5));
+
+            kostka.setLayoutParams(parametry);
+
+
+
+            wiersz.addView(kostka);
         }
+    }
+
+    private int dp(int wartosc) {
+
+        return (int) (wartosc *
+                getResources().getDisplayMetrics().density
+                + 0.5f);
     }
 }

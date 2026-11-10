@@ -1,58 +1,113 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rzuty kostkami"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:padding="15dp"/>
-
-    <EditText
-        android:id="@+id/editTextLiczbaKostek"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Podaj liczbę kostek"
-        android:inputType="number"
-        android:gravity="center"/>
-
-    <Button
-        android:id="@+id/buttonLosuj"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Losuj"/>
-
-    <Button
-        android:id="@+id/buttonRosnaco"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rosnąco"/>
-
-    <Button
-        android:id="@+id/buttonMalejaco"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Malejąco"/>
-
-    <TextView
-        android:id="@+id/textViewWyniki"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wyniki:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:padding="10dp"/>
+    android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/linearLayoutKostki"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        android:padding="24dp">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Losowanie kostek"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#222222"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liczba kostek:"
+            android:textSize="18sp"
+            android:textColor="#333333" />
+
+        <EditText
+            android:id="@+id/editTextLiczbaKostek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Podaj liczbę kostek"
+            android:inputType="number"
+            android:text="5"
+            android:textSize="18sp"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/buttonLosuj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="LOSUJ"
+            android:textSize="16sp"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Wylosowane kostki:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#222222" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutKostki"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Wyniki:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#222222" />
+
+        <TextView
+            android:id="@+id/textViewWyniki"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Wyniki pojawią się tutaj"
+            android:textSize="20sp"
+            android:textColor="#333333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/buttonRosnaco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SORTUJ ROSNĄCO"
+                android:textSize="14sp"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/buttonMalejaco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="SORTUJ MALEJĄCO"
+                android:textSize="14sp"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
